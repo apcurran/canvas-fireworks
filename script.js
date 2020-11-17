@@ -53,9 +53,14 @@ class Particle {
 }
 
 // Implementation
+let particleCount = 450;
 let particles;
+const POWER = 20;
+// Ring effect
+const angleIncrement = Math.PI * 2 / particleCount;
 
 function init() {
+    // Reset val
     particles = [];
 }
 
@@ -79,15 +84,11 @@ function animate() {
 init();
 animate();
 
+
 // Event Listeners
 document.addEventListener("click", (event) => {
     mouse.x = event.clientX;
     mouse.y = event.clientY;
-    
-    const particleCount = 500;
-    const POWER = 20;
-    // Ring effect
-    const angleIncrement = Math.PI * 2 / particleCount;
     
     for (let i = 0; i < particleCount; i++) {
         particles.push(new Particle(
@@ -96,8 +97,8 @@ document.addEventListener("click", (event) => {
             3,
             `hsl(${Math.random() * 360}, 50%, 50%)`,
             { x: Math.cos(angleIncrement * i) * Math.random() * POWER, y: Math.sin(angleIncrement * i) * Math.random() * POWER }
-            ));
-        }
+        ));
+    }
 });
 
 window.addEventListener("resize", () => {
