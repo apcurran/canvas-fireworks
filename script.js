@@ -1,4 +1,4 @@
-// "use strict";
+"use strict";
 
 /** @type {HTMLCanvasElement} */
 const canvas = document.querySelector(".canvas");
