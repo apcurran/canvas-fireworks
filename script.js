@@ -71,8 +71,19 @@ document.addEventListener("click", (event) => {
     mouse.x = event.clientX;
     mouse.y = event.clientY;
 
-    for (let i = 0; i < 400; i++) {
-        particles.push(new Particle(mouse.x, mouse.y, 5, "purple", { x: 1, y: 1 }));
+    const particleCount = 400;
+
+    // Ring effect
+    const angleIncrement = Math.PI * 2 / particleCount;
+
+    for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle(
+            mouse.x,
+            mouse.y,
+            5,
+            "purple",
+            { x: Math.cos(angleIncrement * i) * Math.random(), y: Math.sin(angleIncrement * i) * Math.random() }
+        ));
     }
 
     console.log(particles);
