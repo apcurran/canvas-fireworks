@@ -95,8 +95,8 @@ document.addEventListener("click", (event) => {
     mouse.x = event.clientX;
     mouse.y = event.clientY;
 
-    const particleCount = 400;
-
+    const particleCount = 500;
+    const POWER = 20;
     // Ring effect
     const angleIncrement = Math.PI * 2 / particleCount;
 
@@ -106,7 +106,7 @@ document.addEventListener("click", (event) => {
             mouse.y,
             3,
             `hsl(${Math.random() * 360}, 50%, 50%)`,
-            { x: Math.cos(angleIncrement * i) * Math.random(), y: Math.sin(angleIncrement * i) * Math.random() }
+            { x: Math.cos(angleIncrement * i) * Math.random() * POWER, y: Math.sin(angleIncrement * i) * Math.random() * POWER }
         ));
     }
 });
