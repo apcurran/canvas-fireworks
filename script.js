@@ -11,7 +11,7 @@ const mouse = {
   x: innerWidth / 2,
   y: innerHeight / 2
 }
-const GRAVITY = 0.005;
+const GRAVITY = 0.02;
 const FRICTION = 0.99;
 
 // Objects
@@ -32,11 +32,12 @@ class Particle {
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
         ctx.fillStyle = this.color;
         ctx.fill();
-        ctx.closePath();
         ctx.restore();
     }
     
     update() {
+        this.draw();
+        
         // Multiply x and y velocities by friction
         this.velocity.x *= FRICTION;
         this.velocity.y *= FRICTION;
@@ -48,13 +49,12 @@ class Particle {
         // Reduce alpha value continuously
         this.alpha -= 0.005;
         
-        this.draw();
     }
 }
 
 // Implementation
-let particleCount = 450;
 let particles;
+const particleCount = 450;
 const POWER = 20;
 // Ring effect
 const angleIncrement = Math.PI * 2 / particleCount;
