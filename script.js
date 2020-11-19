@@ -84,7 +84,6 @@ function animate() {
 init();
 animate();
 
-
 // Event Listeners
 document.addEventListener("click", (event) => {
     mouse.x = event.clientX;
