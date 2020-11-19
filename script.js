@@ -37,7 +37,7 @@ class Particle {
     
     update() {
         this.draw();
-        
+
         // Multiply x and y velocities by friction
         this.velocity.x *= FRICTION;
         this.velocity.y *= FRICTION;
@@ -96,7 +96,10 @@ document.addEventListener("click", (event) => {
             mouse.y,
             3,
             `hsl(${Math.random() * 360}, 50%, 50%)`,
-            { x: Math.cos(angleIncrement * i) * Math.random() * POWER, y: Math.sin(angleIncrement * i) * Math.random() * POWER }
+            {
+                x: Math.cos(angleIncrement * i) * Math.random() * POWER,
+                y: Math.sin(angleIncrement * i) * Math.random() * POWER
+            }
         ));
     }
 });
