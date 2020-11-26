@@ -2,7 +2,7 @@
 
 /** @type {HTMLCanvasElement} */
 const canvas = document.querySelector(".canvas");
-const ctx = canvas.getContext("2d");
+const ctx = canvas.getContext("2d", { alpha: false });
 
 canvas.width = document.documentElement.clientWidth;
 canvas.height = document.documentElement.clientHeight;
