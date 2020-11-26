@@ -10,7 +10,7 @@ canvas.height = document.documentElement.clientHeight;
 const mouse = {
   x: innerWidth / 2,
   y: innerHeight / 2
-}
+};
 const GRAVITY = 0.02;
 const FRICTION = 0.99;
 
