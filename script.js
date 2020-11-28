@@ -4,9 +4,6 @@
 const canvas = document.querySelector(".canvas");
 const ctx = canvas.getContext("2d", { alpha: false });
 
-canvas.width = document.documentElement.clientWidth;
-canvas.height = document.documentElement.clientHeight;
-
 const mouse = {
   x: innerWidth / 2,
   y: innerHeight / 2
@@ -14,7 +11,6 @@ const mouse = {
 const GRAVITY = 0.02;
 const FRICTION = 0.99;
 
-// Objects
 class Particle {
     constructor(x, y, radius, color, velocity) {
         this.x = x;
@@ -60,6 +56,10 @@ const POWER = 20;
 const angleIncrement = Math.PI * 2 / particleCount;
 
 function init() {
+    // Set canvas dimensions
+    canvas.width = document.documentElement.clientWidth;
+    canvas.height = document.documentElement.clientHeight;
+
     // Reset val
     particles = [];
 }
@@ -103,9 +103,4 @@ document.addEventListener("click", (event) => {
     }
 });
 
-window.addEventListener("resize", () => {
-    canvas.width = document.documentElement.clientWidth;
-    canvas.height = document.documentElement.clientHeight;
-
-    init();
-});
+window.addEventListener("resize", init);
