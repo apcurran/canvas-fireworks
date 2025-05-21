@@ -111,6 +111,8 @@ function handleClick(event) {
         // reset to the current mouse click's position
         if (!particles[i].active) {
             particles[i].reset(mouse.x, mouse.y, angleIncrement * createdParticles);
+            // increment counter
+            createdParticles++;
         }
     }
 
