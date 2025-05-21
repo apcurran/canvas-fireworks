@@ -106,8 +106,9 @@ function handleClick(event) {
 
     let createdParticles = 0;
 
-    // attempt to re-use inactive particles first
     for (let i = 0; i < particles.length && createdParticles < particleCount; i++) {
+        // if there is an inactive particle, re-use it
+        // reset to the current mouse click's position
         if (!particles[i].active) {
             particles[i].reset(mouse.x, mouse.y, angleIncrement * createdParticles);
         }
@@ -117,7 +118,6 @@ function handleClick(event) {
     while (createdParticles < particleCount) {
         const particle = new Particle();
         particle.reset(mouse.x, mouse.y, angleIncrement * createdParticles);
-
         particles.push(particle);
         // increment counter
         createdParticles++;
