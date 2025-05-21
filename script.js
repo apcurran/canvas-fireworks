@@ -12,13 +12,14 @@ const GRAVITY = 0.02;
 const FRICTION = 0.99;
 
 class Particle {
-    constructor(x, y, radius, color, velocity) {
-        this.x = x;
-        this.y = y;
-        this.radius = radius;
-        this.color = color;
-        this.velocity = velocity;
-        this.alpha = 1;
+    constructor() {
+        this.x = 0;
+        this.y = 0;
+        this.radius = 3;
+        this.color = "#fff";
+        this.velocity = { x: 0, y: 0 };
+        this.alpha = 0;
+        this.active = false;
     }
 
     draw() {
@@ -31,9 +32,28 @@ class Particle {
         ctx.restore();
     }
 
-    update() {
-        this.draw();
+    /**
+     * @param {number} x 
+     * @param {number} y 
+     * @param {number} angle 
+     */
+    reset(x, y, angle) {
+        this.x = x;
+        this.y = y;
+        this.radius = 3;
+        this.color = `hsl(${Math.random() * 360}, 50%, 50%)`;
+        this.velocity.x = Math.cos(angle) * Math.random() * POWER;
+        this.velocity.y = Math.sin(angle) * Math.random() * POWER;
+        this.alpha = 1;
+        this.active = true;
+    }
 
+    update() {
+        if (!this.active) {
+            return;
+        }
+
+        this.draw();
         // Multiply x and y velocities by friction
         this.velocity.x *= FRICTION;
         this.velocity.y *= FRICTION;
@@ -45,21 +65,23 @@ class Particle {
         // Reduce alpha value continuously
         this.alpha -= 0.005;
 
+        // check if spark has faded away -> mark as inactive
+        if (this.alpha <= 0) {
+            this.active = false;
+        }
     }
 }
 
-// Implementation
-let particles;
+// Global vars
+let particles = [];
 const particleCount = 450;
 const POWER = 20;
-// Ring effect
-const angleIncrement = Math.PI * 2 / particleCount;
+const angleIncrement = Math.PI * 2 / particleCount; // Ring effect
 
 function init() {
     // Set canvas dimensions
     canvas.width = document.documentElement.clientWidth;
     canvas.height = document.documentElement.clientHeight;
-
     // Reset val
     particles = [];
 }
@@ -67,35 +89,38 @@ function init() {
 // Animation Loop
 function animate() {
     requestAnimationFrame(animate);
-
     ctx.fillStyle = "rgba(0,0,0, .05)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     for (let i = 0; i < particles.length; i++) {
-        // Remove particle if its alpha val is less than 0.
-        if (particles[i].alpha < 0) {
-            particles.splice(i, 1);
-        } else {
-            particles[i].update();
-        }
+        particles[i].update();
     }
 }
 
+/**
+ * @param {MouseEvent} event 
+ */
 function handleClick(event) {
     mouse.x = event.clientX;
     mouse.y = event.clientY;
 
-    for (let i = 0; i < particleCount; i++) {
-        particles.push(new Particle(
-            mouse.x,
-            mouse.y,
-            3,
-            `hsl(${Math.random() * 360}, 50%, 50%)`,
-            {
-                x: Math.cos(angleIncrement * i) * Math.random() * POWER,
-                y: Math.sin(angleIncrement * i) * Math.random() * POWER
-            }
-        ));
+    let createdParticles = 0;
+
+    // attempt to re-use inactive particles first
+    for (let i = 0; i < particles.length && createdParticles < particleCount; i++) {
+        if (!particles[i].active) {
+            particles[i].reset(mouse.x, mouse.y, angleIncrement * createdParticles);
+        }
+    }
+
+    // if there are not enough particles, create more
+    while (createdParticles < particleCount) {
+        const particle = new Particle();
+        particle.reset(mouse.x, mouse.y, angleIncrement * createdParticles);
+
+        particles.push(particle);
+        // increment counter
+        createdParticles++;
     }
 }
 
