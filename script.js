@@ -65,8 +65,14 @@ class Particle {
         // Reduce alpha value continuously
         this.alpha -= 0.005;
 
-        // check if spark has faded away -> mark as inactive
-        if (this.alpha <= 0) {
+        // CULLING: mark faded OR offscreen particles to skip rendering
+        if (
+            this.alpha <= 0 ||
+            this.x + this.radius < 0 ||
+            this.x - this.radius > canvas.width ||
+            this.y + this.radius < 0 ||
+            this.y - this.radius > canvas.height
+        ) {
             this.active = false;
         }
     }
