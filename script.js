@@ -54,15 +54,13 @@ class Particle {
         }
 
         this.draw();
-        // Multiply x and y velocities by friction
         this.velocity.x *= FRICTION;
         this.velocity.y *= FRICTION;
-        // Add gravity to y velocity
         this.velocity.y += GRAVITY;
         // Update x and y positions
         this.x += this.velocity.x;
         this.y += this.velocity.y;
-        // Reduce alpha value continuously
+        // Reduce alpha value continuously to cause fading
         this.alpha -= 0.005;
 
         // CULLING: mark faded OR offscreen particles to skip rendering
@@ -85,14 +83,13 @@ const POWER = 20;
 const angleIncrement = Math.PI * 2 / particleCount; // Ring effect
 
 function init() {
-    // Set canvas dimensions
     canvas.width = document.documentElement.clientWidth;
     canvas.height = document.documentElement.clientHeight;
     // Reset val
     particles = [];
 }
 
-// Animation Loop
+// Main animation Loop
 function animate() {
     requestAnimationFrame(animate);
     ctx.fillStyle = "rgba(0,0,0, .05)";
@@ -135,6 +132,5 @@ function handleClick(event) {
 init();
 animate();
 
-// Event Listeners
 document.addEventListener("click", handleClick);
 window.addEventListener("resize", init);
