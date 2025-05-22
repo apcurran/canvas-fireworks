@@ -4,4 +4,6 @@
 
 ## Features:
 
-- 2d Canvas API
+- 2D Canvas API
+- Object pooling implementation for particle reuse (optimization)
+- Culling offscreen and faded partiles (optimization)
